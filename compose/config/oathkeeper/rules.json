@@ -1,0 +1,24 @@
+[
+  {
+    "id": "allow-anonymous-with-header-mutator",
+    "upstream": {
+      "url": "http://localhost:6004"
+    },
+    "match": {
+      "url": "http://localhost:6003/<.*>",
+      "methods": ["GET","POST", "PATCH"]
+    },
+    "authenticators": [
+      {
+        "handler": "noop"
+      }
+    ],
+    "authorizer": {
+      "handler": "remote",
+      "config": {
+        "remote": "http://192.168.1.2:6002/api/authorizer/authorize"
+      }
+    },
+    "mutators": [{ "handler": "noop" }]
+  }
+]

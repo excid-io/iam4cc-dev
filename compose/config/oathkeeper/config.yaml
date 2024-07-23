@@ -1,0 +1,35 @@
+serve:
+  proxy:
+    port: 6003 # run the proxy at port 4455
+
+access_rules:
+  repositories:
+    - file:///etc/config/oathkeeper/rules.json
+
+errors:
+  fallback:
+    - json
+  handlers:
+    json:
+      enabled: true
+      config:
+        verbose: true
+    redirect:
+      enabled: true
+      config:
+        to: https://www.ory.sh/docs
+
+
+authorizers:
+  remote:
+    enabled: true
+    config:
+      remote: http://192.168.1.2:6002/api/authorizer/authorize
+
+authenticators:
+  noop:
+    enabled: true
+
+mutators:
+  noop:
+    enabled: true

@@ -1,0 +1,15 @@
+services:
+  oathkeeper:
+    image: oryd/oathkeeper:v0.40.7
+    ports:
+      - "6003:6003" # Proxy
+    command: serve --config=/etc/config/oathkeeper/config.yaml
+    volumes:
+      - type: bind
+        source: ./config/oathkeeper
+        target: /etc/config/oathkeeper
+    restart: on-failure
+    networks:
+      - iam4cc
+networks:
+  iam4cc:
