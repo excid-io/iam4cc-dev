@@ -1,5 +1,24 @@
 services:
-  oathkeeper:
+  auth:
+    image: oryd/hydra:v2.2.0
+    ports:
+      - "6001:4444" # Public port
+      - "6000:4445" # Admin port
+    command: serve -c /etc/config/hydra/hydra.yml all --dev
+    volumes:
+      - type: volume
+        source: auth-sqlite
+        target: /var/lib/sqlite
+        read_only: false
+      - type: bind
+        source: ./config/hydra
+        target: /etc/config/hydra
+    environment:
+      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true
+    restart: unless-stopped
+    networks:
+      - iam4cc
+  pep:
     image: oryd/oathkeeper:v0.40.7
     ports:
       - "6003:6003" # Proxy
@@ -11,5 +30,32 @@ services:
     restart: on-failure
     networks:
       - iam4cc
+  pdp:
+    image: pdp
+    ports:
+      - "6002:6002"
+    environment:
+      - ASPNETCORE_HTTP_PORTS=6002
+    restart: on-failure
+    networks:
+      - iam4cc
+ # registry:
+ #   image: registry
+ #   ports:
+ #     - "6004:6004"
+ #   volumes:
+ #     - type: volume
+ #       source: registry-sqlite
+ #       target: /app/db
+ #       read_only: false
+ #   environment:
+ #     - ASPNETCORE_HTTP_PORTS=6004
+ #     - ASPNETCORE_ENVIRONMENT=Development
+ #   restart: on-failure
+ #   networks:
+ #     - iam4cc
 networks:
   iam4cc:
+volumes:
+  auth-sqlite:
+ # registry-sqlite:

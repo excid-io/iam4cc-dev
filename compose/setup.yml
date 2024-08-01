@@ -1,0 +1,18 @@
+services:
+  auth-migrate:
+    image: oryd/hydra:v2.2.0
+    environment:
+      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true
+    command: migrate -c /etc/config/hydra/hydra.yml sql -e --yes
+    volumes:
+      - type: volume
+        source: auth-sqlite
+        target: /var/lib/sqlite
+        read_only: false
+      - type: bind
+        source: ./config/hydra
+        target: /etc/config/hydra
+    restart: on-failure
+volumes:
+  auth-sqlite:
+

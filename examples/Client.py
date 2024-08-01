@@ -7,7 +7,23 @@ headers={
      "Authorization":"Bearer " + access_token,
 }
 
-endpoint_url = "http://localhost:6003/test"
+endpoint_url = "http://localhost:6003/item/14"
 
 response = requests.get(endpoint_url, headers = headers)
 print(response.text)
+
+'''
+headers={
+     "Authorization":"Bearer " + access_token,
+     "Content-Type":"application/json"
+}
+
+data={
+    "id":"1"
+}
+
+endpoint_url = "http://localhost:6003/test"
+
+response = requests.post(endpoint_url, headers = headers, data = json.dumps(data))
+print(response.text)
+'''

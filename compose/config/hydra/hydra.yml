@@ -1,0 +1,11 @@
+urls:
+  self:
+    issuer: http://192.168.1.2:6001/
+    public: http://192.168.1.2:6001/
+    admin: http://192.168.1.2:6000/
+
+secrets:
+  system:
+    - youReallyNeedToChangeThis
+
+

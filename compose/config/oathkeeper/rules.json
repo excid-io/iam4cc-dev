@@ -2,11 +2,11 @@
   {
     "id": "allow-anonymous-with-header-mutator",
     "upstream": {
-      "url": "http://localhost:6004"
+      "url": "http://192.168.1.2:6004"
     },
     "match": {
-      "url": "http://localhost:6003/<.*>",
-      "methods": ["GET","POST", "PATCH"]
+      "url": "http://192.168.1.2:6003/item/<[0-9]+>",
+      "methods": ["GET"]
     },
     "authenticators": [
       {
@@ -16,7 +16,10 @@
     "authorizer": {
       "handler": "remote",
       "config": {
-        "remote": "http://192.168.1.2:6002/api/authorizer/authorize"
+        "remote": "http://pdp:6002/api/authorizer/authorize",
+        "headers": {
+          "X-ID": "{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}"
+        }
       }
     },
     "mutators": [{ "handler": "noop" }]
