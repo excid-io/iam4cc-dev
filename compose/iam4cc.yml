@@ -39,6 +39,7 @@ services:
     restart: on-failure
     networks:
       - iam4cc
+ 
  # registry:
  #   image: registry
  #   ports:
@@ -54,6 +55,17 @@ services:
  #   restart: on-failure
  #   networks:
  #     - iam4cc
+  openfga:
+    image: openfga/openfga
+    ports:
+      - "6005:8080" # HTTP Server
+      #- "6006:8081" # gRPC API
+      - "6007:3000" # Playground
+    environment:
+      - ASPNETCORE_HTTP_PORTS=6002
+    restart: on-failure
+    networks:
+      - iam4cc
 networks:
   iam4cc:
 volumes:
