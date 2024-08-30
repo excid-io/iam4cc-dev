@@ -1,0 +1,274 @@
+{
+    "schema_version": "1.1",
+    "type_definitions": [
+      {
+        "type": "user",
+        "relations": {},
+        "metadata": null
+      },
+      {
+        "type": "user_group",
+        "relations": {
+          "member": {
+            "this": {}
+          }
+        },
+        "metadata": {
+          "relations": {
+            "member": {
+              "directly_related_user_types": [
+                {
+                  "type": "user",
+                  "condition": ""
+                }
+              ],
+              "module": "",
+              "source_info": null
+            }
+          },
+          "module": "",
+          "source_info": null
+        }
+      },
+      {
+        "type": "device_group",
+        "relations": {
+          "can_read": {
+            "this": {}
+          },
+          "can_write": {
+            "this": {}
+          }
+        },
+        "metadata": {
+          "relations": {
+            "can_read": {
+              "directly_related_user_types": [
+                {
+                  "type": "user",
+                  "condition": ""
+                },
+                {
+                  "type": "user_group",
+                  "relation": "member",
+                  "condition": ""
+                }
+              ],
+              "module": "",
+              "source_info": null
+            },
+            "can_write": {
+              "directly_related_user_types": [
+                {
+                  "type": "user",
+                  "condition": ""
+                },
+                {
+                  "type": "user_group",
+                  "relation": "member",
+                  "condition": ""
+                }
+              ],
+              "module": "",
+              "source_info": null
+            }
+          },
+          "module": "",
+          "source_info": null
+        }
+      },
+      {
+        "type": "device",
+        "relations": {
+          "can_read": {
+            "union": {
+              "child": [
+                {
+                  "this": {}
+                },
+                {
+                  "tupleToUserset": {
+                    "tupleset": {
+                      "object": "",
+                      "relation": "parent"
+                    },
+                    "computedUserset": {
+                      "object": "",
+                      "relation": "can_read"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "can_write": {
+            "union": {
+              "child": [
+                {
+                  "this": {}
+                },
+                {
+                  "tupleToUserset": {
+                    "tupleset": {
+                      "object": "",
+                      "relation": "parent"
+                    },
+                    "computedUserset": {
+                      "object": "",
+                      "relation": "can_write"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "parent": {
+            "this": {}
+          }
+        },
+        "metadata": {
+          "relations": {
+            "can_read": {
+              "directly_related_user_types": [
+                {
+                  "type": "user",
+                  "condition": ""
+                },
+                {
+                  "type": "user_group",
+                  "relation": "member",
+                  "condition": ""
+                }
+              ],
+              "module": "",
+              "source_info": null
+            },
+            "can_write": {
+              "directly_related_user_types": [
+                {
+                  "type": "user",
+                  "condition": ""
+                },
+                {
+                  "type": "user_group",
+                  "relation": "member",
+                  "condition": ""
+                }
+              ],
+              "module": "",
+              "source_info": null
+            },
+            "parent": {
+              "directly_related_user_types": [
+                {
+                  "type": "device_group",
+                  "condition": ""
+                }
+              ],
+              "module": "",
+              "source_info": null
+            }
+          },
+          "module": "",
+          "source_info": null
+        }
+      },
+      {
+        "type": "resource",
+        "relations": {
+          "can_read": {
+            "union": {
+              "child": [
+                {
+                  "this": {}
+                },
+                {
+                  "tupleToUserset": {
+                    "tupleset": {
+                      "object": "",
+                      "relation": "parent"
+                    },
+                    "computedUserset": {
+                      "object": "",
+                      "relation": "can_read"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "can_write": {
+            "union": {
+              "child": [
+                {
+                  "this": {}
+                },
+                {
+                  "tupleToUserset": {
+                    "tupleset": {
+                      "object": "",
+                      "relation": "parent"
+                    },
+                    "computedUserset": {
+                      "object": "",
+                      "relation": "can_write"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "parent": {
+            "this": {}
+          }
+        },
+        "metadata": {
+          "relations": {
+            "can_read": {
+              "directly_related_user_types": [
+                {
+                  "type": "user",
+                  "condition": ""
+                },
+                {
+                  "type": "user_group",
+                  "relation": "member",
+                  "condition": ""
+                }
+              ],
+              "module": "",
+              "source_info": null
+            },
+            "can_write": {
+              "directly_related_user_types": [
+                {
+                  "type": "user",
+                  "condition": ""
+                },
+                {
+                  "type": "user_group",
+                  "relation": "member",
+                  "condition": ""
+                }
+              ],
+              "module": "",
+              "source_info": null
+            },
+            "parent": {
+              "directly_related_user_types": [
+                {
+                  "type": "device",
+                  "condition": ""
+                }
+              ],
+              "module": "",
+              "source_info": null
+            }
+          },
+          "module": "",
+          "source_info": null
+        }
+      }
+    ],
+    "conditions": {}
+  }

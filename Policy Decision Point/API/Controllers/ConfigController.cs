@@ -34,7 +34,7 @@ namespace API.Controllers
             var fgaClient = new OpenFgaClient(configuration);
             try
             {
-                var store = await fgaClient.CreateStore(new ClientCreateStoreRequest() { Name = newStoreRequest.Name });
+                var store = await fgaClient.CreateStore(new ClientCreateStoreRequest() { Name = newStoreRequest.Name }) ;
                 _storeId = store.Id;
                 return new JsonResult(store);
             }
@@ -59,6 +59,37 @@ namespace API.Controllers
             try
             {
                 var response = await fgaClient.WriteAuthorizationModel(newAuthorizationModel.Model);
+                return new JsonResult(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Tuples(NewTuples newTuples)
+        {
+            _logger.LogInformation(JsonSerializer.Serialize(newTuples));
+            var configuration = new ClientConfiguration()
+            {
+                ApiUrl = _apiUrl,
+                StoreId = newTuples.StoreId,
+                AuthorizationModelId = newTuples.AuthorizationModelId
+            };
+            var fgaClient = new OpenFgaClient(configuration);
+            var options = new ClientWriteOptions
+            {
+                AuthorizationModelId = newTuples.AuthorizationModelId,
+            };
+            var body = new ClientWriteRequest()
+            {
+                Writes = newTuples.Tuples
+            };
+           
+            try
+            {
+                var response = await fgaClient.Write(body, options);
                 return new JsonResult(response);
             }
             catch (Exception ex)
