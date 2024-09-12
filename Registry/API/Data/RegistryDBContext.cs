@@ -13,7 +13,7 @@ namespace Excid.Registry.API.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
            => optionsBuilder.LogTo(Console.WriteLine, LogLevel.Warning);
         public DbSet<Relationship> Relationships { get; set; }
-        public DbSet<RelationshipObject> RelationshipObjects { get; set; }
-        public DbSet<RelationshipType> RelationshipTypes { get; set; }
+        public DbSet<Entity> RelationshipObjects { get; set; }
+        public DbSet<Relation> RelationshipTypes { get; set; }
     }
 }

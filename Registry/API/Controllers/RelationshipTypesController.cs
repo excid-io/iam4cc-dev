@@ -58,7 +58,7 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<RelationshipType>> Create(NewRelationshipTypeRequest request)
+        public async Task<ActionResult<Relation>> Create(NewRelationshipTypeRequest request)
         {
             if (CurrentUser == null) return Unauthorized();
             /**
@@ -67,7 +67,7 @@ namespace API.Controllers
              */
 
 
-            var item = new RelationshipType();
+            var item = new Relation();
             item.Description = request.Description;
             item.Owner = CurrentUser;
             item.Name = request.Name;

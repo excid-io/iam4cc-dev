@@ -2,13 +2,12 @@
 
 namespace Excid.Registry.API.Models
 {
-    public class RelationshipObject
+    public class Relation
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        public string Owner { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public string Owner { get; set; } = string.Empty;
     }
 }

@@ -58,11 +58,11 @@ namespace API.Controllers
              * TODO
              */
 
-
             var item = new Relationship();
-            item.RelationshipObjectID = request.RelationshipObjectID;
-            item.RelationshipTypeID = request.RelationshipTypeID;
             item.Owner = CurrentUser;
+            item.Subject = request.User;
+            item.Relation = request.Relation;
+            item.Object = request.Object;
             _context.Relationships.Add(item);
             await _context.SaveChangesAsync();
 

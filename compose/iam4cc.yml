@@ -60,9 +60,10 @@ services:
     ports:
       - "6005:8080" # HTTP Server
       #- "6006:8081" # gRPC API
-      - "6007:3000" # Playground
+      #- "3000:3000" # Playground
     environment:
       - ASPNETCORE_HTTP_PORTS=6002
+    command: run
     restart: on-failure
     networks:
       - iam4cc
