@@ -67,5 +67,4 @@ services:
       - iam4cc
 networks:
   iam4cc:
-volumes:
-  auth-sqlite:
+
