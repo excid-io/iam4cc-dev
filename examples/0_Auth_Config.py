@@ -4,9 +4,6 @@ import json
 admin_url = "http://192.168.1.2:6000/"
 
 
-response = requests.request("DELETE", admin_url + "clients/client-app-1")
-print(response.text)
-
 headers = {
     'Content-Type': 'application/json',
 }

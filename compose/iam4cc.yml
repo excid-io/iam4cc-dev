@@ -6,15 +6,11 @@ services:
       - "6000:4445" # Admin port
     command: serve -c /etc/config/hydra/hydra.yml all --dev
     volumes:
-      - type: volume
-        source: auth-sqlite
-        target: /var/lib/sqlite
-        read_only: false
       - type: bind
         source: ./config/hydra
         target: /etc/config/hydra
     environment:
-      - DSN=sqlite:///var/lib/sqlite/db.sqlite?_fk=true
+      - DSN=memory
     restart: unless-stopped
     networks:
       - iam4cc
@@ -40,21 +36,23 @@ services:
     networks:
       - iam4cc
  
- # registry:
- #   image: registry
- #   ports:
- #     - "6004:6004"
- #   volumes:
- #     - type: volume
- #       source: registry-sqlite
- #       target: /app/db
- #       read_only: false
- #   environment:
- #     - ASPNETCORE_HTTP_PORTS=6004
- #     - ASPNETCORE_ENVIRONMENT=Development
- #   restart: on-failure
- #   networks:
- #     - iam4cc
+  registry:
+    image: registry
+    ports:
+      - "6004:6004"
+    environment:
+      - ASPNETCORE_HTTP_PORTS=6004
+      - ASPNETCORE_ENVIRONMENT=Production
+    volumes:
+      - type: bind
+        source: ./config/registry/appsettings.Production.json
+        target: /app/appsettings.Production.json
+      - type: bind
+        source: ./config/registry/keys
+        target: /keys
+    restart: on-failure
+    networks:
+      - iam4cc
   openfga:
     image: openfga/openfga
     ports:
@@ -71,4 +69,3 @@ networks:
   iam4cc:
 volumes:
   auth-sqlite:
- # registry-sqlite:

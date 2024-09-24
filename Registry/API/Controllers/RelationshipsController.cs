@@ -4,9 +4,13 @@ using Excid.Registry.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using API.Models.Requests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.Controllers
 {
+    [ApiController]
+    [Authorize]
+    [Route("api/Relationships/[action]")]
     public class RelationshipsController : ControllerBase
     {
         private readonly ILogger<RelationshipsController> _logger;
@@ -63,6 +67,7 @@ namespace API.Controllers
             item.Subject = request.User;
             item.Relation = request.Relation;
             item.Object = request.Object;
+            item.Description= request.Description;
             _context.Relationships.Add(item);
             await _context.SaveChangesAsync();
 

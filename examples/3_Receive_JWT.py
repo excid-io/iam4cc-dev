@@ -27,37 +27,9 @@ json_response = json.loads(response.text)
 
 access_token = json_response['access_token']
 
-
-
-#-------New Relationship------
-
-headers={
-    "Authorization":"Bearer " + access_token,
-    "Content-Type":"application/json"
-}
-'''
-data={
-    "description":"User client-app-1 is member of it group",
-    "User": "user:client-app-1",
-    "Relation": "member",
-    "Object": "user_group:it"
-}
-'''
-data={
-    "description":"It group has read access to meters",
-    "User": "user_group:it#member",
-    "Relation": "can_read",
-    "Object": "device_group:meters"
-}
-
-response = requests.post(registry_url + "api/Relationships/Create", headers = headers, data = json.dumps(data))
-print(response.status_code)
-print(response.text)
-
-#-------List------------
 headers={
     "Authorization":"Bearer " + access_token
 }
 
-response = requests.get(registry_url + "api/Relationships/List", headers = headers)
+response = requests.get(registry_url + "api/Issue/Jwt", headers = headers)
 print(response.text)

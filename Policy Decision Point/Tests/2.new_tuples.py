@@ -21,11 +21,7 @@ new_model_request = {
         'relation': 'parent',
         'object': 'device:meter1',
         },
-        {
-        'user': 'user:Alice',
-        'relation': 'member',
-        'object': 'user_group:it',
-        },
+
         {
         'user': 'user_group:it#member',
         'relation': 'can_read',

@@ -9,6 +9,7 @@ namespace Excid.Registry.API.Models
         [Key]
         public int Id { get; set; }
         public string Owner { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public string Subject { get; set; } = string.Empty;
         public string Relation { get; set; } = string.Empty;
         public string Object { get; set; } = string.Empty;
@@ -16,5 +17,13 @@ namespace Excid.Registry.API.Models
         //public int RelationshipTypeID { get; set; }
         //public virtual Entity RelationshipObject { get; set; } = new Entity();
         //public virtual Relation RelationshipType { get; set; } = new Relation();
+    }
+
+    public class RelationshipInJWT
+    {
+        [Key]
+        public string Subject { get; set; } = string.Empty;
+        public string Relation { get; set; } = string.Empty;
+        public string Object { get; set; } = string.Empty;
     }
 }

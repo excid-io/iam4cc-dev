@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(RegistryDBContext))]
-    [Migration("20240801171822_InitialCreate")]
+    [Migration("20240921164708_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -19,32 +19,7 @@ namespace API.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
 
-            modelBuilder.Entity("Excid.Registry.API.Models.Relationship", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Owner")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("RelationshipObjectID")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("RelationshipTypeID")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RelationshipObjectID");
-
-                    b.HasIndex("RelationshipTypeID");
-
-                    b.ToTable("Relationships");
-                });
-
-            modelBuilder.Entity("Excid.Registry.API.Models.RelationshipObject", b =>
+            modelBuilder.Entity("Excid.Registry.API.Models.Entity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -67,7 +42,7 @@ namespace API.Migrations
                     b.ToTable("RelationshipObjects");
                 });
 
-            modelBuilder.Entity("Excid.Registry.API.Models.RelationshipType", b =>
+            modelBuilder.Entity("Excid.Registry.API.Models.Relation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -92,21 +67,33 @@ namespace API.Migrations
 
             modelBuilder.Entity("Excid.Registry.API.Models.Relationship", b =>
                 {
-                    b.HasOne("Excid.Registry.API.Models.RelationshipObject", "RelationshipObject")
-                        .WithMany()
-                        .HasForeignKey("RelationshipObjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
-                    b.HasOne("Excid.Registry.API.Models.RelationshipType", "RelationshipType")
-                        .WithMany()
-                        .HasForeignKey("RelationshipTypeID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Navigation("RelationshipObject");
+                    b.Property<string>("Object")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
-                    b.Navigation("RelationshipType");
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Relation")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Relationships");
                 });
 #pragma warning restore 612, 618
         }
