@@ -13,5 +13,5 @@ new_model_request = {
     "model":model
 }
 
-response = requests.post( "http://192.168.1.2:6002/api/config/AuthorizationModels", data=json.dumps(new_model_request), headers=headers)
+response = requests.post( "http://192.168.1.2:6002/api/admin/AuthorizationModels", data=json.dumps(new_model_request), headers=headers)
 print(response.text)

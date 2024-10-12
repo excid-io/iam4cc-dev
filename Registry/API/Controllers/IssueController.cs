@@ -62,19 +62,27 @@ namespace API.Controllers
             {
                 _logger.LogError("Exception in IssueController:" + ex.ToString());
             }
+            var iat = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            var exp = DateTimeOffset.UtcNow.AddDays(1).ToUnixTimeSeconds();
+            var iss = _configuration.GetValue<string>("Issuer:iss");
             var jwtpayload = new JwtPayload()
-                {
-
-                    {"aud", "sigstore" }
-
-                };
+            {
+                { "iat", iat },
+                { "exp", exp },
+                { "iss", iss ?? ""},
+                { "aud", "sigstore" },
+                { "sub", CurrentUser },
+                {"relationships",JsonDocument.Parse(JsonSerializer.Serialize(relationships)).RootElement}
+            };
 
 
             var jwtHeader = new JwtHeader(
                 new SigningCredentials(
                     key: new ECDsaSecurityKey(_signingKey),
                     algorithm: SecurityAlgorithms.EcdsaSha256)
-                );
+                ){
+                { "kid", "key1" }
+            }; 
             var jwtToken = new JwtSecurityToken(jwtHeader, jwtpayload);
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             return Ok(jwtTokenHandler.WriteToken(jwtToken));

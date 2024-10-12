@@ -29,14 +29,6 @@ namespace idp.Controllers
             return View();
         }
 
-        [ActionName("openid-configuration")]
-        public IActionResult OpenIDConfiguration()
-        {
-            var openIDConfiguration = new OpenIDConfiguration();
-            openIDConfiguration.Issuer = _iss;
-            openIDConfiguration.JwksUri = _iss + "/.well-known/jwks";
-            return Content(JsonSerializer.Serialize(openIDConfiguration), "application/json");
-        }
 
         public IActionResult Jwks()
         {

@@ -30,5 +30,5 @@ new_model_request = {
     ]
 }
 
-response = requests.post( "http://192.168.1.2:6002/api/config/Tuples", data=json.dumps(new_model_request), headers=headers)
+response = requests.post( "http://192.168.1.2:6002/api/admin/Tuples", data=json.dumps(new_model_request), headers=headers)
 print(response.text)

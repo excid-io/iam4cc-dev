@@ -9,14 +9,28 @@ headers = {
 }
 
 payload = {
-    "client_id": "client-app-1",
-    "client_secret":"client-app-1-secret",
+    "client_id": "admin",
+    "client_secret":"admin-secret",
     "grant_types": [
-        "urn:ietf:params:oauth:grant-type:jwt-bearer",
         "client_credentials"
     ],
     "access_token_strategy":"jwt",
-    "audience":["https://registry.excid.io"]
+    "audience":["https://iot-data.space"],
+    "scope":"admin"
+}
+
+response = requests.request("POST", admin_url + "clients", headers=headers, data=json.dumps(payload))
+print(response.text)
+
+payload = {
+    "client_id": "alice",
+    "client_secret":"alice-secret",
+    "grant_types": [
+        "client_credentials"
+    ],
+    "access_token_strategy":"jwt",
+    "audience":["https://iot-data.space"],
+    "scope":"user"
 }
 
 response = requests.request("POST", admin_url + "clients", headers=headers, data=json.dumps(payload))

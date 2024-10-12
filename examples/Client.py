@@ -2,19 +2,52 @@ import requests
 import json
 import base64
 
-#access_token = "eyJhbGciOiJSUzI1NiIsInR5cCI6ImF0K2p3dCIsImtpZCI6InlvMVZESW81Ymx2VFBXMVNEOWNBbCJ9.eyJpc3MiOiJodHRwczovL2V4Y2lkLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJRMElUNjJSNkJGNDlFYmhJM1oyTVRJUkxMYjZTNXZKUEBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9yZWdpc3RyeS5leGNpZC5pbyIsImlhdCI6MTcyMTczMTkwNSwiZXhwIjoxNzIxODE4MzA1LCJqdGkiOiI4OFZQdHBnblJnSzJQVVBZdGtqeW02IiwiY2xpZW50X2lkIjoiUTBJVDYyUjZCRjQ5RWJoSTNaMk1USVJMTGI2UzV2SlAifQ.LfBTTKqpeIP8N3wsk-kbzYvAsL8kCaCmKSQSfNa53Qw94DLn-kYQk5OoUTYQFu7noXaiWYcjmfVfyc_6Dea3PgW7t-57rzvI1HBJegffdhAf9e7e_2gGBZnK3R3SB9tvShShs10pdRTCptHQwl0_KNnu3oJ4s6sR56Frs5ARH5ReyN-cMxkE8NtSNw22W_VBFR_g_glwzh3lWia0OhgFrFyYdYjh9utS2j835urPTIUpnCE6lbJ83sLR9Vm5Zgvsv7CXsULeJMlU4_B4mhFnEhrKi85mi-h2z1fWWlFoRRkx4Shk-Xybnf6u3t_5S5OfXZJBILeZp-rqRZRsY4scYA"
+import requests
+import json
+import base64
 
-credential = {
-    "username":"Alice"
+token_url = "http://192.168.1.2:6001/oauth2/token"
+registry_url = " http://192.168.1.2:6004/"
+
+client_id =  "user"
+client_secret = "user-secret"
+
+authorization_header = client_id + ":" + client_secret
+
+headers={
+    "Content-Type":"application/x-www-form-urlencoded",
+    "Authorization": "Basic " + base64.b64encode(authorization_header.encode()).decode()
 }
 
-access_token = base64.b64encode(json.dumps(credential).encode()).decode()
+data={
+    "client_id":"user",
+    "audience":"https://iot-data.space",
+    "grant_type":"client_credentials",
+    "scope":"user"
+}
+
+
+response = requests.post(token_url, headers = headers, data = data)
+print(response.text)
+
+json_response = json.loads(response.text)
+access_token = json_response['access_token']
+
+'''
+headers={
+    "Authorization":"Bearer " + access_token
+}
+
+response = requests.get(registry_url + "api/Issue/Jwt", headers = headers)
+
+access_token = response.text
+'''
 headers={
      "Authorization":"Bearer " + access_token,
 }
+print(response.text)
 
 endpoint_url = "http://192.168.1.2:6003/item/switch1"
-
 response = requests.get(endpoint_url, headers = headers)
 print(response.text)
 

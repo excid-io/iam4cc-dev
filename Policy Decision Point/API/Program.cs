@@ -1,15 +1,23 @@
 using Excid.Pdp.OpenFGA;
+using Microsoft.Identity.Web;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddAuthorization();
+builder.Services.AddRequiredScopeAuthorization();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IOpenFGA, OpenFGA>();
-
+builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>
+{
+    options.Authority = builder.Configuration["JwtBearer:ValidIssuer"];
+    options.Audience = builder.Configuration["JwtBearer:ValidAudience"];
+    options.RequireHttpsMetadata = false;
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

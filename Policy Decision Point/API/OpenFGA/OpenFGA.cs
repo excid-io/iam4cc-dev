@@ -1,23 +1,78 @@
-﻿using OpenFga.Sdk.Client;
-using static System.Net.WebRequestMethods;
+﻿using Excid.Pdp.OpenFGA.Models;
+using OpenFga.Sdk.Client;
+using OpenFga.Sdk.Client.Model;
+using OpenFga.Sdk.Model;
+
 
 namespace Excid.Pdp.OpenFGA
 {
     public class OpenFGA : IOpenFGA
     {
-        public required OpenFgaClient Client { get; set; }
+        private OpenFgaClient _client;
+        private readonly IConfiguration _configuration;
+        private readonly ILogger<OpenFGA> _logger;
 
-        private string _openFGAEndpoint { get; set; } = string.Empty;
 
-        public OpenFGA()
+        public OpenFGA(ILogger<OpenFGA> logger, IConfiguration configuration)
         {
-            //_openFGAEndpoint = "http://localhost:8080";
-            _openFGAEndpoint = "http://192.168.1.2:6005";
-            var configuration = new ClientConfiguration()
-            { 
-                ApiUrl = _openFGAEndpoint
+            _logger = logger;
+            _configuration = configuration;
+            string _apiURl = _configuration.GetValue<string>("OpenFGA:ApiUrl") ?? "";
+            string? _storeId = _configuration.GetValue<string>("OpenFGA:StoreId");
+            string? _authorizationModelId = _configuration.GetValue<string>("OpenFGA:AuthorizationModelId");
+            var openFGAClientConfiguration = new ClientConfiguration()
+            {
+                ApiUrl = _apiURl,
             };
-            Client = new OpenFgaClient(configuration);
+            if (_storeId != null)
+            {
+                openFGAClientConfiguration.StoreId = _storeId;
+            }
+            if (_authorizationModelId != null)
+            {
+                openFGAClientConfiguration.AuthorizationModelId = _authorizationModelId;
+            }
+            _client = new OpenFgaClient(openFGAClientConfiguration);
+
         }
+
+        public async Task<ClientWriteResponse?> NewTuples(NewTuplesRequest newTuples)
+        {
+
+            var body = new ClientWriteRequest()
+            {
+                Writes = newTuples.Tuples
+            };
+            var response = await _client.Write(body);
+            return response;
+        }
+
+        public async Task<CreateStoreResponse?> NewStore(NewStoreRequest newStore)
+        {
+            var response = await _client.CreateStore(new ClientCreateStoreRequest() { Name = newStore.Name });
+            if (response != null)
+            {
+                _client.StoreId = response.Id;
+            }
+            return response;
+
+        }
+
+        public async Task<WriteAuthorizationModelResponse?> NewModel(NewAuthorizationModelRequest newModel)
+        {
+            var response = await _client.WriteAuthorizationModel(newModel.Model);
+            if (response != null)
+            {
+                _client.AuthorizationModelId = response.AuthorizationModelId;
+            }
+            return response;
+        }
+
+        public async Task<CheckResponse?> Check(ClientCheckRequest clientCheckRequest)
+        {
+            var response = await _client.Check(clientCheckRequest);
+            return response;
+        }
+
     }
 }

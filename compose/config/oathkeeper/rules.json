@@ -14,14 +14,7 @@
       }
     ],
     "authorizer": {
-      "handler": "remote",
-      "config": {
-        "remote": "http://pdp:6002/api/authorizer/authorize",
-        "headers": {
-          "objectId": "{{ printIndex .MatchContext.RegexpCaptureGroups 0 }}",
-          "method": "{{ .MatchContext.Method}}"
-        }
-      }
+      "handler": "remote_json"
     },
     "mutators": [{ "handler": "noop" }]
   }

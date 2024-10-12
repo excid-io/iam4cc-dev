@@ -26,33 +26,33 @@ services:
     restart: on-failure
     networks:
       - iam4cc
-  pdp:
-    image: pdp
-    ports:
-      - "6002:6002"
-    environment:
-      - ASPNETCORE_HTTP_PORTS=6002
-    restart: on-failure
-    networks:
-      - iam4cc
+ # pdp:
+ #   image: pdp
+ #   ports:
+ #     - "6002:6002"
+ #   environment:
+ #     - ASPNETCORE_HTTP_PORTS=6002
+ #   restart: on-failure
+ #   networks:
+ #     - iam4cc
  
-  registry:
-    image: registry
-    ports:
-      - "6004:6004"
-    environment:
-      - ASPNETCORE_HTTP_PORTS=6004
-      - ASPNETCORE_ENVIRONMENT=Production
-    volumes:
-      - type: bind
-        source: ./config/registry/appsettings.Production.json
-        target: /app/appsettings.Production.json
-      - type: bind
-        source: ./config/registry/keys
-        target: /keys
-    restart: on-failure
-    networks:
-      - iam4cc
+  #registry:
+  #  image: registry
+  #  ports:
+  #    - "6004:6004"
+  #  environment:
+  #    - ASPNETCORE_HTTP_PORTS=6004
+  #    - ASPNETCORE_ENVIRONMENT=Production
+  #  volumes:
+  #    - type: bind
+  #      source: ./config/registry/appsettings.Production.json
+  #      target: /app/appsettings.Production.json
+  #    - type: bind
+  #      source: ./config/registry/keys
+  #      target: /keys
+  #  restart: on-failure
+  #  networks:
+  #    - iam4cc
   openfga:
     image: openfga/openfga
     ports:
