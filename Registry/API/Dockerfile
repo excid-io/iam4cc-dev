@@ -13,9 +13,10 @@ RUN dotnet restore "./API/API.csproj"
 COPY --chown=app . .
 
 WORKDIR "/src/API"
-RUN rm  ./db/*
+# Ensure empty ./db directory
+RUN mkdir -p ./db && rm -rf ./db/*
 RUN dotnet build "./API.csproj" -c $BUILD_CONFIGURATION -o /app/build
-ENV PATH $PATH:/root/.dotnet/tools
+ENV PATH=$PATH:/root/.dotnet/tools
 RUN dotnet tool install --global dotnet-ef
 RUN dotnet ef database update --project ./API.csproj
 
