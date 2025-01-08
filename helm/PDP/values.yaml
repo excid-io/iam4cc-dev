@@ -1,0 +1,7 @@
+image:
+  repository: pdp
+  tag: "latest"
+
+service:
+  port: 6002
+

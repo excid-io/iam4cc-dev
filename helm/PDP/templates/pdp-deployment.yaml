@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-pdp
+  labels:
+    app: {{ .Release.Name }}-pdp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-pdp
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-pdp
+    spec:
+      containers:
+        - name: pdp
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: Never
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "{{ .Values.service.port }}"
+
