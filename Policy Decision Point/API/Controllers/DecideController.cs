@@ -90,8 +90,6 @@ namespace API.Controllers
                _logger.LogInformation("Exception in authorization process: " + ex.ToString());
                return Unauthorized();
            }
-
-            */
            /*
            string headers = String.Empty;
            foreach (var key in Request.Headers.Keys)
