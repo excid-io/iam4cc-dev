@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+  labels:
+    app: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: {{ .Values.env.environment }}
+            - name: ASPNETCORE_HTTP_PORTS
+              value: "{{ .Values.env.httpPorts }}"
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          volumeMounts:
+            - mountPath: /config/appsettings.Production.json
+              name: appsettings-volume
+              subPath: appsettings.Production.json
+            - mountPath: /keys
+              name: keys-volume
+      volumes:
+        - name: appsettings-volume
+          configMap:
+            name: {{ .Values.volume.appsettingsConfigMapName }}
+        - name: keys-volume
+          secret:
+            secretName: {{ .Values.volume.keysSecretName }}
+
