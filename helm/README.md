@@ -12,6 +12,7 @@ This script sets up and starts a Minikube Kubernetes cluster. It also enables ne
 **Usage:**
 ```bash
 ./start_minikube.sh
+```
 
 ---
 
@@ -24,6 +25,7 @@ This script deploys the ORY Hydra service using Helm. Hydra provides OAuth 2.0 a
 **Usage:**
 ```bash
 ./install_hydra_helm.sh
+```
 
 ---
 
@@ -36,6 +38,7 @@ This script deploys ORY Oathkeeper with the necessary configuration for the IAM4
 **Usage:**
 ```bash
 ./install_oathkeeper_helm.sh
+```
 
 ---
 
@@ -48,6 +51,7 @@ This script deploys OpenFGA.
 **Usage:**
 ```bash
 ./install_openfga_helm.sh
+```
 
 ---
 
@@ -60,6 +64,7 @@ This script builds and deploys the custom Helm Chart for the Policy Decision Poi
 **Usage:**
 ```bash
 ./deploy_pdp.sh
+```
 
 ---
 
@@ -72,6 +77,7 @@ This script builds and deploys the custom Helm Chart for the Registry component 
 **Usage:**
 ```bash
 ./deploy_registry.sh
+```
 
 ---
 
@@ -84,6 +90,7 @@ This script stops using Minikube's Docker daemon, uninstalls all Helm releases, 
 **Usage:**
 ```bash
 ./cleanup_minikube_helm.sh
+```
 
 ---
 
@@ -96,6 +103,7 @@ This script stops and deletes the Minikube Kubernetes cluster. Note that the hel
 **Usage:**
 ```bash
 ./stop_minikube.sh
+```
 
 --- 
 
@@ -110,6 +118,7 @@ Sometimes, ports required by the implementation may already be in use or not pro
 **Usage:**
 ```bash
 sudo lsof -i -P -n | grep LISTEN
+```
 
 Look for the ports related to the implementation (6000, 6002, 6003, 6004, 6005).
 
@@ -118,6 +127,7 @@ Look for the ports related to the implementation (6000, 6002, 6003, 6004, 6005).
 **Usage:**
 ```bash
 sudo lsof -i :6004 -t | xargs -r kill -9
+```
 
 ### 3. Stop All Kubernetes Port-Forwarding
 
@@ -126,5 +136,6 @@ If multiple port-forwarding sessions are active, they may conflict. Terminate al
 **Usage:**
 ```bash
 pkill -f "kubectl port-forward"
+```
 
 Note that this will affect all kubectl port-forward processes in your system.
