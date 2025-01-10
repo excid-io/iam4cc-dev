@@ -31,13 +31,17 @@ cd ..
 echo "Installing PDP Helm chart..."
 helm install pdp ./helm/PDP
 
+# Add a short delay to allow pod creation
+echo "Waiting for Kubernetes to create PDP pods..."
+sleep 5
+
 # Wait for the PDP pods to be ready
 echo "Waiting for PDP pods to be ready..."
-kubectl wait --for=condition=ready pod -l app=pdp-pdp --timeout=120s
+kubectl wait --for=condition=ready pod -l app=pdp --timeout=120s
 
 # Port-forward the PDP service
 echo "Port-forwarding PDP service to localhost:6002..."
-kubectl port-forward svc/pdp-pdp 6002:6002 &
+kubectl port-forward svc/pdp 6002:6002 &
 
 echo "PDP deployment completed successfully!"
 
