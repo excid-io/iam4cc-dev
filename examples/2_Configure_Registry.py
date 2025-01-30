@@ -2,8 +2,8 @@ import requests
 import json
 import base64
 
-token_url = "http://192.168.1.2:6001/oauth2/token"
-registry_url = " http://192.168.1.2:6004/"
+token_url = "http://192.168.1.18:6001/oauth2/token"
+rebac_url = "http://192.168.1.18:6002"
 
 client_id =  "client-app-1"
 client_secret = "client-app-1-secret"
@@ -50,7 +50,7 @@ data={
     "Object": "device_group:meters"
 }
 
-response = requests.post(registry_url + "api/Relationships/Create", headers = headers, data = json.dumps(data))
+response = requests.post(rebac_url + "api/Relationships/Create", headers = headers, data = json.dumps(data))
 print(response.status_code)
 print(response.text)
 

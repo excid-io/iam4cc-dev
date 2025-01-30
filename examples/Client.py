@@ -6,11 +6,11 @@ import requests
 import json
 import base64
 
-token_url = "http://192.168.1.2:6001/oauth2/token"
-registry_url = " http://192.168.1.2:6004/"
+token_url = "http://192.168.1.18:6001/oauth2/token"
+endpoint = "http://192.168.1.18:6003"
 
-client_id =  "user"
-client_secret = "user-secret"
+client_id =  "alice"
+client_secret = "alice-secret"
 
 authorization_header = client_id + ":" + client_secret
 
@@ -41,13 +41,15 @@ headers={
 response = requests.get(registry_url + "api/Issue/Jwt", headers = headers)
 
 access_token = response.text
+
+
+print(response.text)
 '''
+
 headers={
      "Authorization":"Bearer " + access_token,
 }
-print(response.text)
-
-endpoint_url = "http://192.168.1.2:6003/item/switch1"
+endpoint_url = endpoint + "/item/switch1"
 response = requests.get(endpoint_url, headers = headers)
 print(response.text)
 

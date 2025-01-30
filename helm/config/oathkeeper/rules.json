@@ -2,10 +2,10 @@
   {
     "id": "allow-anonymous-with-header-mutator",
     "upstream": {
-      "url": "http://192.168.1.2:6004"
+      "url": "http://192.168.1.18:6004"
     },
     "match": {
-      "url": "http://192.168.1.2:6003/item/<[a-zA-Z0-9]+>",
+      "url": "http://192.168.1.18:6003/item/<[a-zA-Z0-9]+>",
       "methods": ["GET"]
     },
     "authenticators": [

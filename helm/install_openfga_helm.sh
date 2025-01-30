@@ -2,6 +2,7 @@
 
 # Install OpenFGA using Helm
 echo "Installing OpenFGA with Helm..."
+helm repo add openfga https://openfga.github.io/helm-charts
 
 helm install openfga openfga/openfga \
     --set 'service.ports.port=8080'

@@ -23,4 +23,6 @@ spec:
           env:
             - name: ASPNETCORE_HTTP_PORTS
               value: "{{ .Values.service.port }}"
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "{{ .Values.rebac.environment }}"
 

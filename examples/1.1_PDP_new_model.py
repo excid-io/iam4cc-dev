@@ -2,8 +2,8 @@ import requests
 import json
 import base64
 
-token_url = "http://192.168.1.2:6001/oauth2/token"
-pdp_url = "http://192.168.1.2:6002"
+token_url = "http://192.168.1.18:6001/oauth2/token"
+rebac_url = "http://192.168.1.18:6002"
 
 client_id =  "admin"
 client_secret = "admin-secret"
@@ -40,5 +40,5 @@ new_model_request = {
     "model":model
 }
 
-response = requests.post( "http://192.168.1.2:6002/api/admin/AuthorizationModels", data=json.dumps(new_model_request), headers=headers)
+response = requests.post( rebac_url + "/api/admin/AuthorizationModels", data=json.dumps(new_model_request), headers=headers)
 print(response.text)

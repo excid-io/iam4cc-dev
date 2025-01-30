@@ -1,0 +1,9 @@
+image:
+  repository: rebac
+  tag: "latest"
+
+service:
+  port: 6002
+
+rebac:
+  environment: Development

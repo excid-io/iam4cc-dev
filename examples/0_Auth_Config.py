@@ -1,7 +1,8 @@
 import requests
 import json
 
-admin_url = "http://192.168.1.2:6000/"
+admin_url = "http://192.168.1.18:6000/"
+
 
 
 headers = {
