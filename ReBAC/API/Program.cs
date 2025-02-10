@@ -12,12 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IOpenFGA, OpenFGA>();
-builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>
-{
-    options.Authority = builder.Configuration["JwtBearer:ValidIssuer"];
-    options.Audience = builder.Configuration["JwtBearer:ValidAudience"];
-    options.RequireHttpsMetadata = false;
-});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -26,9 +21,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

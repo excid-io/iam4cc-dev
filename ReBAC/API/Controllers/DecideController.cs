@@ -7,57 +7,58 @@ using Microsoft.Identity.Web.Resource;
 using OpenFga.Sdk.Client.Model;
 using System.Security.Claims;
 using System.Text.Json;
+using Microsoft.Extensions.Primitives;
 
 namespace API.Controllers
 {
     [ApiController]
     [Route("api/decide/[action]")]
-    [Authorize]
-    [RequiredScope("user")]
     public class DecideController : ControllerBase
     {
         private readonly ILogger<DecideController> _logger;
-        private readonly AuthorizationPasrer _authorizationPasrer;
+        private readonly VPPasrer _vpPasrer;
         private readonly IOpenFGA _openFGA;
 
         public DecideController(ILogger<DecideController> logger, IOpenFGA openFGA)
         {
             _logger = logger;
-            _authorizationPasrer = new AuthorizationPasrer();
+            _vpPasrer = new VPPasrer();
             _openFGA = openFGA;
         }
 
         [HttpPost]
         public async Task<IActionResult> MakeDecision(DecisionRequest decisionRequest)
         {
-            var user = User.Claims.First(q => q.Type == ClaimTypes.NameIdentifier).Value;
-            _logger.LogInformation("user is : " + user + " " + JsonSerializer.Serialize(decisionRequest));
-
-
            try
            {
-               /* 
-               UserContext? userContext = await _authorizationPasrer.parse(authorization);
+               StringValues code;
+               string vp = "";
+               Request.Headers.TryGetValue("Authorization", out code);
+               if (code.Count > 0)
+               {
+                   vp = code!.First()!.Split(" ")[1];
+               }else
+               {
+                   return Unauthorized();
+               }
+
+               _logger.LogInformation(vp);
+               UserContext? userContext = await _vpPasrer.Parse(vp,_logger);
                _logger.LogInformation("user is : " + JsonSerializer.Serialize(userContext));
                if (userContext == null)
                {
                    _logger.LogInformation("Authorization header does not contain a user");
                    return Unauthorized();
                }
-               var options = new ClientCheckOptions
-               {
-                   AuthorizationModelId = _openFGA.Client.AuthorizationModelId,
-               };
-               */
                var body = new ClientCheckRequest
                {
-                   User = "user:" + user,
+                   User = "user:" + userContext.Username,
                    Relation = "can_read",
                    Object = "resource:" + decisionRequest.Resource.Id,
 
                };
-               /* 
-               if (userContext.Relationships!= null)
+ 
+               if (userContext.Relationships.Count > 0)
                {
                    body.ContextualTuples = new List<ClientTupleKey>();
                    foreach (var relationship in userContext.Relationships)
@@ -71,7 +72,7 @@ namespace API.Controllers
                            }
                        );
                    }
-               }*/
+               }
 
                _logger.LogInformation("Sending to OpenFGA:" + JsonSerializer.Serialize(body));
                var response = await _openFGA.Check(body);
