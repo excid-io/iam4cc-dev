@@ -27,7 +27,7 @@ namespace Excid.Pdp.Security
                     {
                         Subject = "user:" + credentialSubject.holderName,
                         Relation = "phd_student",
-                        Object = "university:Technical"
+                        Object = "university:TUA"
                     });
                 }
                 if (credentialSubject.orgIdentifier == "cs_department")
@@ -35,7 +35,7 @@ namespace Excid.Pdp.Security
                     userContext.Relationships.Add(new Relationships(){
                         Subject = "user:" + credentialSubject.holderName,
                         Relation = "cs_department",
-                        Object = "university:Technical"
+                        Object = "university:TUA"
                     });
                 }
             }

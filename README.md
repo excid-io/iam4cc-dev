@@ -62,7 +62,8 @@ minikube image load rebac:latest
 
 Then, from the `iam4cc-dev` directory execute
 ```
-helm install rebac ./helm/ReBAC
+helm install rebac ./helm/ReBAC \
+     --set 'openfga.apiURL=http://192.168.1.18:6005' 
 ```
 
 Execute in another window

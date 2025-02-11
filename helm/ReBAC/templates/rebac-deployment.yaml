@@ -25,4 +25,6 @@ spec:
               value: "{{ .Values.service.port }}"
             - name: ASPNETCORE_ENVIRONMENT
               value: "{{ .Values.rebac.environment }}"
+            - name: OpenFGA__ApiUrl
+              value: "{{ .Values.openfga.apiURL }}"
 

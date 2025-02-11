@@ -53,7 +53,7 @@ namespace API.Controllers
                var body = new ClientCheckRequest
                {
                    User = "user:" + userContext.Username,
-                   Relation = "can_read",
+                   Relation = "reader",
                    Object = "resource:" + decisionRequest.Resource.Id,
 
                };

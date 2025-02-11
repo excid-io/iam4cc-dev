@@ -7,3 +7,6 @@ service:
 
 rebac:
   environment: Development
+
+openfga:
+  apiURL: http://192.168.1.1
