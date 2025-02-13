@@ -1,0 +1,288 @@
+{
+    "schema_version": "1.1",
+    "type_definitions": [
+      {
+        "type": "trusted_organizations",
+        "relations": {
+          "organization": {
+            "this": {}
+          },
+          "users": {
+            "tupleToUserset": {
+              "computedUserset": {
+                "relation": "is_authorized"
+              },
+              "tupleset": {
+                "relation": "organization"
+              }
+            }
+          }
+        },
+        "metadata": {
+          "relations": {
+            "organization": {
+              "directly_related_user_types": [
+                {
+                  "type": "university"
+                }
+              ]
+            },
+            "users": {
+              "directly_related_user_types": []
+            }
+          }
+        }
+      },
+      {
+        "type": "university",
+        "relations": {
+          "cs_department": {
+            "this": {}
+          },
+          "phd_student": {
+            "this": {}
+          },
+          "is_authorized": {
+            "intersection": {
+              "child": [
+                {
+                  "computedUserset": {
+                    "relation": "cs_department"
+                  }
+                },
+                {
+                  "computedUserset": {
+                    "relation": "phd_student"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "metadata": {
+          "relations": {
+            "cs_department": {
+              "directly_related_user_types": [
+                {
+                  "type": "user"
+                }
+              ]
+            },
+            "phd_student": {
+              "directly_related_user_types": [
+                {
+                  "type": "user"
+                }
+              ]
+            },
+            "is_authorized": {
+              "directly_related_user_types": []
+            }
+          }
+        }
+      },
+      {
+        "type": "user",
+        "relations": {},
+        "metadata": null
+      },
+      {
+        "type": "asset_group",
+        "relations": {
+          "writer": {
+            "this": {}
+          },
+          "reader": {
+            "union": {
+              "child": [
+                {
+                  "this": {}
+                },
+                {
+                  "computedUserset": {
+                    "relation": "writer"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "metadata": {
+          "relations": {
+            "writer": {
+              "directly_related_user_types": [
+                {
+                  "type": "trusted_organizations",
+                  "relation": "users"
+                }
+              ]
+            },
+            "reader": {
+              "directly_related_user_types": [
+                {
+                  "type": "trusted_organizations",
+                  "relation": "users"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "type": "asset",
+        "relations": {
+          "writer": {
+            "union": {
+              "child": [
+                {
+                  "this": {}
+                },
+                {
+                  "tupleToUserset": {
+                    "computedUserset": {
+                      "relation": "writer"
+                    },
+                    "tupleset": {
+                      "relation": "parent"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "reader": {
+            "union": {
+              "child": [
+                {
+                  "this": {}
+                },
+                {
+                  "computedUserset": {
+                    "relation": "writer"
+                  }
+                },
+                {
+                  "tupleToUserset": {
+                    "computedUserset": {
+                      "relation": "reader"
+                    },
+                    "tupleset": {
+                      "relation": "parent"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "parent": {
+            "this": {}
+          }
+        },
+        "metadata": {
+          "relations": {
+            "writer": {
+              "directly_related_user_types": [
+                {
+                  "type": "trusted_organizations",
+                  "relation": "users"
+                }
+              ]
+            },
+            "reader": {
+              "directly_related_user_types": [
+                {
+                  "type": "trusted_organizations",
+                  "relation": "users"
+                }
+              ]
+            },
+            "parent": {
+              "directly_related_user_types": [
+                {
+                  "type": "asset_group"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "type": "resource",
+        "relations": {
+          "writer": {
+            "union": {
+              "child": [
+                {
+                  "this": {}
+                },
+                {
+                  "tupleToUserset": {
+                    "computedUserset": {
+                      "relation": "writer"
+                    },
+                    "tupleset": {
+                      "relation": "parent"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "reader": {
+            "union": {
+              "child": [
+                {
+                  "this": {}
+                },
+                {
+                  "computedUserset": {
+                    "relation": "writer"
+                  }
+                },
+                {
+                  "tupleToUserset": {
+                    "computedUserset": {
+                      "relation": "reader"
+                    },
+                    "tupleset": {
+                      "relation": "parent"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "parent": {
+            "this": {}
+          }
+        },
+        "metadata": {
+          "relations": {
+            "writer": {
+              "directly_related_user_types": [
+                {
+                  "type": "trusted_organizations",
+                  "relation": "users"
+                }
+              ]
+            },
+            "reader": {
+              "directly_related_user_types": [
+                {
+                  "type": "trusted_organizations",
+                  "relation": "users"
+                }
+              ]
+            },
+            "parent": {
+              "directly_related_user_types": [
+                {
+                  "type": "asset"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
